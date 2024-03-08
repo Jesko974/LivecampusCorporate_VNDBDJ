@@ -1,0 +1,16 @@
+filebeat.inputs:
+- type: docker
+  containers.ids:
+    - '*'
+  processors:
+    - add_docker_metadata: ~
+
+- type: log
+  enabled: true
+  paths:
+    - /var/log/app/*.log
+  fields:
+    app_name: "hello_world"
+
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]

@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - logs:/var/log/app
+
+  lb:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - logs:/var/log/app
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.15.2
+    volumes:
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+    command: filebeat -e -strict.perms=false
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.15.2
+    ports:
+      - "5601:5601"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+
+volumes:
+  logs:
+  elasticsearch-data:
