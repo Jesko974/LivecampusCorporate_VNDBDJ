@@ -34,7 +34,3 @@ Filebeat est utilisé pour collecter les logs de l'application et les envoyer à
 
 Pour accéder à Kibana, utilisez l'URL spécifiée dans le fichier docker-compose.yml.
 
-## Maintenance et Support
-
-Pour toute question ou problème, veuillez contacter [votre_nom] à [votre_email].
-
